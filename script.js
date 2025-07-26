@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const payload = { question, answer, feedback, reason };
     console.log("送信内容:", payload);
 
-    fetch("https://faqbot-ngw3.onrender.com/feedback", {
+    fetch("https://chatbot-reserve.onrender.com/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spinner.style.display = "block";
 
     try {
-      const res = await fetch("https://faqbot-ngw3.onrender.com/chat", {
+      const res = await fetch("https://chatbot-reserve.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question })
