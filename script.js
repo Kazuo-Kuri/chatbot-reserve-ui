@@ -1,6 +1,6 @@
-// script.js（minWidth指定削除済み）
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("question");
+  const sendButton = document.getElementById("send-button");
   const chatContainer = document.getElementById("chat-container");
   const spinner = document.getElementById("loading-spinner");
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const feedback = btn.dataset.feedback;
         if (feedback === "useful") {
           sendFeedback(question, answer, feedback, "");
-          feedbackDiv.innerHTML = "フィードバックありがとうございました！";
+          feedbackDiv.innerHTML = "フィードバックありがとうございます。";
         } else {
           showFeedbackReasonForm(feedbackDiv, question, answer);
         }
@@ -80,8 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showFeedbackReasonForm(container, question, answer) {
     container.innerHTML = `
-      <label for="reason-input" style="font-size: 0.8em; color: #666;">差し支えなければ、理由を教えてください：</label>
-      <textarea id="reason-input" rows="2" placeholder="例：情報が古かった、質問と違う内容だった など" style="width: 100%; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; padding: 4px;"></textarea>
+      <label for="reason-input" style="font-size: 0.8em; color: #666;">改善点や理由があればご記入ください。</label>
+      <textarea id="reason-input" rows="2" placeholder="内容が違う、わかりにくい、など" style="width: 100%; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; padding: 4px;"></textarea>
       <button id="submit-reason" style="margin-top: 4px; padding: 4px 8px; border-radius: 4px; cursor: pointer;">送信</button>
     `;
 
@@ -95,14 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       sendFeedback(question, answer, "not_useful", reason);
-      container.innerHTML = "フィードバックありがとうございました！";
+      container.innerHTML = "フィードバックありがとうございます。";
       scrollToBottom();
     });
   }
 
   function sendFeedback(question, answer, feedback, reason) {
     const payload = { question, answer, feedback, reason };
-    console.log("送信内容:", payload);
+    console.log("送信するフィードバック:", payload);
 
     fetch("https://chatbot-reserve.onrender.com/feedback", {
       method: "POST",
@@ -111,10 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("サーバー応答:", data);
+        console.log("フィードバック送信成功:", data);
       })
       .catch(err => {
-        console.error("送信エラー:", err);
+        console.error("フィードバック送信エラー:", err);
       });
   }
 
@@ -136,24 +136,23 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Network error");
 
       const data = await res.json();
-      const answer = data.response?.trim() || "申し訳ありません、回答を取得できませんでした。";
+      const answer = data.response?.trim() || "申し訳ありません、うまく回答できませんでした。";
       appendMessage("サポート", answer, "right", question);
     } catch (err) {
-      console.error("通信エラー:", err);
-      appendMessage("サポート", "エラーが発生しました。", "right", question);
+      console.error("チャット取得エラー:", err);
+      appendMessage("サポート", "現在、接続に問題が発生しています。", "right", question);
     } finally {
       spinner.style.display = "none";
     }
   }
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      ask();
-    }
-  });
+  // 送信ボタンクリック
+  if (sendButton) {
+    sendButton.addEventListener("click", ask);
+  }
 
+  // 閉じる処理（未使用）
   window.closeChat = function () {
-    alert("チャットを閉じます（ここに閉じる処理を追加できます）");
+    alert("このチャットは現在閉じる機能が未実装です。");
   };
 });
