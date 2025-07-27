@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendButton = document.getElementById("send-button");
   const chatContainer = document.getElementById("chat-container");
   const spinner = document.getElementById("loading-spinner");
+  const chatWrapper = document.querySelector(".chat-container");
 
   function scrollToBottom() {
     chatContainer.scrollTo({
@@ -31,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const label = document.createElement("div");
     label.className = "label";
     label.textContent = sender;
+    if (sender === "ユーザー") {
+      label.style.textAlign = "right";
+    }
 
     const bubble = document.createElement("div");
     bubble.className = `bubble ${alignment === "left" ? "user" : "support"}`;
@@ -146,13 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 送信ボタンクリック
   if (sendButton) {
     sendButton.addEventListener("click", ask);
   }
 
-  // 閉じる処理（未使用）
+  // チャット閉じるボタン機能
   window.closeChat = function () {
-    alert("このチャットは現在閉じる機能が未実装です。");
+    if (chatWrapper) {
+      chatWrapper.style.display = "none";
+    }
   };
 });
