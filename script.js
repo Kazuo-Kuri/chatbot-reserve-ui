@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendButton = document.getElementById("send-button");
   const chatContainer = document.getElementById("chat-container");
   const spinner = document.getElementById("loading-spinner");
-  const chatWrapper = document.querySelector(".chat-container");
 
   function scrollToBottom() {
     chatContainer.scrollTo({
@@ -153,17 +152,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (sendButton) {
     sendButton.addEventListener("click", ask);
   }
-
-  window.closeChat = function () {
-  const wrapper = document.querySelector(".chat-container");
-  if (wrapper) {
-    wrapper.style.display = "none"; // 必要であれば iframe 内も非表示
-  }
-
-  // セッション記録を「閉じた」にする（安全策）
-  sessionStorage.setItem("chatbotClosed", "true");
-
-  // 親に「閉じて」と伝える
-  window.parent.postMessage({ type: "CLOSE_CHAT" }, "https://psi-coffee.com");
-};
 });
