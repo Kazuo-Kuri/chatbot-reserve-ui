@@ -157,10 +157,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.closeChat = function () {
   const wrapper = document.querySelector(".chat-container");
   if (wrapper) {
-    wrapper.style.display = "none";  // 任意：iframe内で非表示にしたい場合
+    wrapper.style.display = "none"; // 必要であれば iframe 内も非表示
   }
 
-  // ✅ 親ウィンドウに「チャットを閉じて」と伝える
+  // セッション記録を「閉じた」にする（安全策）
+  sessionStorage.setItem("chatbotClosed", "true");
+
+  // 親に「閉じて」と伝える
   window.parent.postMessage({ type: "CLOSE_CHAT" }, "https://psi-coffee.com");
 };
 });
