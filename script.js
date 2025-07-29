@@ -1,3 +1,32 @@
+const md = window.markdownit();
+
+// <a> タグに target="_blank" を追加するカスタムレンダラー
+const defaultRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+  return self.renderToken(tokens, idx, options);
+};
+
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  const token = tokens[idx];
+
+  // 既に target 属性が付いていない場合に追加
+  const targetAttrIndex = token.attrIndex('target');
+  if (targetAttrIndex < 0) {
+    token.attrPush(['target', '_blank']); // 新しく追加
+  } else {
+    token.attrs[targetAttrIndex][1] = '_blank'; // 上書き
+  }
+
+  // rel="noopener noreferrer" も追加（セキュリティ対策）
+  const relAttrIndex = token.attrIndex('rel');
+  if (relAttrIndex < 0) {
+    token.attrPush(['rel', 'noopener noreferrer']);
+  } else {
+    token.attrs[relAttrIndex][1] = 'noopener noreferrer';
+  }
+
+  return defaultRender(tokens, idx, options, env, self);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("question");
   const sendButton = document.getElementById("send-button");
@@ -44,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToBottom();
 
     if (alignment === "right") {
-      typeText(bubble, message);
+      // MarkdownをHTMLに変換してリンク対応させる
+      bubble.innerHTML = md.render(message);
       addFeedbackButtons(messageWrapper, originalQuestion, message);
     } else {
       bubble.textContent = message;

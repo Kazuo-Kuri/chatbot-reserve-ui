@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PSIサポートチャット</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
+  <style type="text/css">
+  body,td,th {
+    font-family: "Helvetica Neue", sans-serif;
+}
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
 </head>
 <body>
   <div class="chat-container">
     <!-- タイトル + 閉じるボタン -->
     <div class="chat-header">
-      <span class="chat-title">PSI製造予約システムサポートチャット</span>
+      <span class="chat-title">製造予約システム サポートチャット<small style="font-size: 11px;">　[試験運用中]</small></span>
     </div>
 
     <!-- チャット表示エリア -->
@@ -19,7 +24,7 @@
         
       <div class="chat-message right">
         <div class="label">サポート</div>
-        <div class="bubble support">お世話になります。どのようにお手伝いできますか？</div>
+        <div class="bubble support">いつもお世話になります。<br>何かお困りごとはございますか？</div>
       </div>
 
     </div>
@@ -35,6 +40,9 @@
   <input type="text" id="question" placeholder="メッセージを入力..." />
   <button id="send-button">送信</button>
 </div>
+     <p class="chat-disclaimer">
+  ※現在一部機能を試験運用中です。内容に誤りや不足がありましたら、<a href="https://psi-coffee.com/mail.html" target="_blank" rel="noopener noreferrer">【お問い合わせフォーム】</a>よりご連絡ください。
+</p> 
   </div>
 
   <script src="script.js"></script>

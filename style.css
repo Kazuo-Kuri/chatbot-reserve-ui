@@ -38,7 +38,7 @@ html, body {
 }
 
 .chat-header h1, .chat-title {
-  font-size: 1.2em;
+  font-size: 1.15em;
   margin: 0;
 }
 
@@ -103,6 +103,14 @@ html, body {
 .chat-input-area button:hover {
   background-color: #696a6a;
 }
+.chat-disclaimer {
+  font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+  padding: 0 10px;
+  line-height: 1.4;
+  text-align: left;
+}
 
 /* メッセージ共通 */
 .chat-message {
@@ -166,6 +174,12 @@ html, body {
   white-space: pre-wrap;
   word-wrap: break-word;
   box-sizing: border-box;
+}
+
+.bubble.support a {
+  color: #0066cc;       /* 濃い青 */
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* アニメーション */
