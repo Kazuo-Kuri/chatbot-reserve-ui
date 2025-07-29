@@ -1,4 +1,4 @@
-const md = window.markdownit();
+const md = window.markdownit({ breaks: true, html: false });
 
 // <a> タグに target="_blank" を追加するカスタムレンダラー
 const defaultRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
