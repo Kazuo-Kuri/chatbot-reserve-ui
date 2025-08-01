@@ -6,7 +6,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', sans-serif;
-  background-color: #f4f4f4;
+  background-color: #F2F4F7;
 }
 
 /* チャット全体コンテナ */
@@ -19,7 +19,7 @@ html, body {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  background-color: #1C2D5A;
+  background-color: #F2F4F7;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 0px;
   overflow: hidden;
@@ -38,7 +38,7 @@ html, body {
 }
 
 .chat-header h1, .chat-title {
-  font-size: 1.05em;
+  font-size: 1.1em;
   margin: 0;
 }
 
@@ -60,11 +60,11 @@ html, body {
   gap: 1em;
   width: 100%;
   box-sizing: border-box;
+  background-color: #F2F4F7;
 }
 
 /* 入力欄（最新版） */
 .chat-input-area {
-  background: #F2F4F7;
   padding: 0.5em 1em 1em;
   border-top: 1px solid #ccc;
   display: flex;
@@ -105,11 +105,12 @@ html, body {
 }
 .chat-disclaimer {
   font-size: 12px;
-  color: #666;
+  color: #666666;
   margin-top: 6px;
   padding: 0 10px;
   line-height: 1.4;
   text-align: left;
+  background-color: #F2F4F7;
 }
 
 /* メッセージ共通 */
@@ -242,4 +243,18 @@ html, body {
 /* 最後の段落（定型文など）だけ間隔を詰める */
 .bubble.support p:last-of-type {
   margin-top: 0.2em;
+}
+#send-button {
+  background-color: #1C2D5A;  /* 背景色 */
+  color: #FFFFFF;             /* 文字色 */
+  border: none;               /* 境界線なし */
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+  background-color: #5C7EC9; /* ホバー時の濃い色 */
 }
