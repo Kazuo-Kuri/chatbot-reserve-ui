@@ -243,3 +243,14 @@ html, body {
 .bubble.support p:last-of-type {
   margin-top: 0.2em;
 }
+
+/* チャットボックス内の段落の上下余白を調整 */
+.bubble p {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+/* 最後の段落（定型文など）だけ間隔を詰める */
+.bubble p:last-of-type {
+  margin-top: 0.2em;
+}
