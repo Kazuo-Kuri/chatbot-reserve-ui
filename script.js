@@ -25,6 +25,19 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  const SESSION_KEY = "psi_chat_session_id";
+  let sessionId = sessionStorage.getItem(SESSION_KEY);
+  if (!sessionId) {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+      sessionId = window.crypto.randomUUID();
+    } else {
+      const bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      sessionId = Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+    }
+    sessionStorage.setItem(SESSION_KEY, sessionId);
+  }
+
   const input = document.getElementById("question");
   const sendButton = document.getElementById("send-button");
   const chatContainer = document.getElementById("chat-container");
@@ -173,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("https://chatbot-reserve.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question })
+        body: JSON.stringify({ question, session_id: sessionId })
       });
       if (!res.ok) throw new Error("Network error");
       const data = await res.json();
