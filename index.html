@@ -4,6 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PSI製造予約システム サポートチャット</title>
+
+<script>
+  if (window.location.hostname === "chatbot-reserve-ui.onrender.com") {
+    const newUrl =
+      "https://chatbot-re.psi-coffee.com" +
+      window.location.pathname +
+      window.location.search +
+      window.location.hash;
+
+    window.location.replace(newUrl);
+  }
+</script>
+
   <link rel="stylesheet" href="style.css" />
   <style type="text/css">
   body,td,th {
