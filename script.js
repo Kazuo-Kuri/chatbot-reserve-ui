@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     sessionStorage.setItem(SESSION_KEY, sessionId);
   }
+  const HISTORY_KEY = `psi_chat_history:${sessionId}`;
+  localStorage.removeItem("chat_history");
 
   const input = document.getElementById("question");
   const sendButton = document.getElementById("send-button");
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showNextChar();
   }
 
-  function appendMessage(sender, message, alignment, originalQuestion = null) {
+  function appendMessage(sender, message, alignment, originalQuestion = null, shouldSave = true) {
     const messageWrapper = document.createElement("div");
     messageWrapper.className = `chat-message ${alignment}`;
 
@@ -83,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       bubble.textContent = message;
     }
-    saveChatHistory();
+    if (shouldSave) saveChatHistory();
   }
 
   function saveChatHistory() {
@@ -94,17 +96,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const maxMessages = 50;
     const trimmed = messages.slice(-maxMessages);
-    localStorage.setItem("chat_history", JSON.stringify(trimmed));
+    sessionStorage.setItem(HISTORY_KEY, JSON.stringify(trimmed));
   }
 
   function loadChatHistory() {
-    const history = localStorage.getItem("chat_history");
+    const history = sessionStorage.getItem(HISTORY_KEY);
     if (!history) return;
-    const messages = JSON.parse(history);
-    messages.forEach(msg => {
-      const alignment = msg.sender === "ユーザー" ? "left" : "right";
-      appendMessage(msg.sender, msg.text, alignment);
-    });
+    try {
+      const messages = JSON.parse(history);
+      if (!Array.isArray(messages)) throw new Error("Invalid chat history");
+
+      const validMessages = messages.filter(msg => (
+        msg && typeof msg.sender === "string" && typeof msg.text === "string"
+      ));
+      if (validMessages.length === 0) return;
+
+      chatContainer.innerHTML = "";
+      validMessages.forEach(msg => {
+        const alignment = msg.sender === "ユーザー" ? "left" : "right";
+        appendMessage(msg.sender, msg.text, alignment, null, false);
+      });
+    } catch (error) {
+      console.warn("チャット履歴を復元できませんでした。", error);
+      sessionStorage.removeItem(HISTORY_KEY);
+    }
   }
 
   function addFeedbackButtons(container, question, answer) {
